@@ -1,0 +1,163 @@
+<h2>JD Candidate Search</h2>
+<p class="hint">Enter a role and skills, or paste a job description. Search ranks resumes already indexed in the shared pool.</p>
+
+<div class="card">
+  <fieldset [disabled]="loading()" class="jd-fields">
+  <label for="role">Job role or title</label>
+  <input id="role" name="role" type="text" maxlength="200" [(ngModel)]="role" placeholder="Full Stack Developer">
+  <div class="jd-grid">
+    <div>
+      <label for="required-skill">Required skills</label>
+      <div class="skill-entry">
+        <input id="required-skill" name="requiredSkill" type="text" [(ngModel)]="requiredSkillInput"
+          (keydown.enter)="$event.preventDefault(); addSkill('required')" placeholder="Enter a skill">
+        <button type="button" class="btn small" (click)="addSkill('required')">Add required</button>
+      </div>
+      <ul class="skill-list" aria-label="Required skills">
+        @for (skill of requiredSkills; track skill; let i = $index) {
+          <li><span>{{ skill }}</span><button type="button" class="btn small ghost"
+            [attr.aria-label]="'Remove required skill ' + skill" (click)="removeSkill('required', i)">Remove</button></li>
+        }
+      </ul>
+    </div>
+    <div>
+      <label for="preferred-skill">Preferred skills</label>
+      <div class="skill-entry">
+        <input id="preferred-skill" name="preferredSkill" type="text" [(ngModel)]="preferredSkillInput"
+          (keydown.enter)="$event.preventDefault(); addSkill('preferred')" placeholder="Enter a skill">
+        <button type="button" class="btn small" (click)="addSkill('preferred')">Add preferred</button>
+      </div>
+      <ul class="skill-list" aria-label="Preferred skills">
+        @for (skill of preferredSkills; track skill; let i = $index) {
+          <li><span>{{ skill }}</span><button type="button" class="btn small ghost"
+            [attr.aria-label]="'Remove preferred skill ' + skill" (click)="removeSkill('preferred', i)">Remove</button></li>
+        }
+      </ul>
+    </div>
+    <div>
+      <label for="min-experience">Minimum experience (years)</label>
+      <input id="min-experience" name="minimumExperience" type="number" min="0" max="60" step="0.5" [(ngModel)]="minimumExperience">
+    </div>
+    <div>
+      <label for="max-experience">Maximum experience (years)</label>
+      <input id="max-experience" name="maximumExperience" type="number" min="0" max="60" step="0.5" [(ngModel)]="maximumExperience">
+    </div>
+  </div>
+  @if (skillMessage) { <p class="warn" role="status">{{ skillMessage }}</p> }
+  <label for="education">Education requirements</label>
+  <input id="education" name="education" type="text" maxlength="500" [(ngModel)]="education">
+  <label class="checkbox-label"><input name="educationRequired" type="checkbox" [(ngModel)]="educationRequired"> Education is required</label>
+  <label for="responsibilities">Responsibilities (one per line)</label>
+  <textarea id="responsibilities" name="responsibilities" rows="3" [(ngModel)]="responsibilities"></textarea>
+  <label for="preferences">Additional preferences (one per line)</label>
+  <textarea id="preferences" name="preferences" rows="3" [(ngModel)]="additionalPreferences"></textarea>
+  <label for="jd">Job description (optional when using structured fields)</label>
+  <textarea id="jd" name="jd" rows="9" maxlength="20000" [(ngModel)]="jobDescription"
+    placeholder="Paste the job description, including Required Skills and Preferred Skills"></textarea>
+  <p class="hint">Structured skills take precedence over skills in the pasted description. Scores and rank use skills only; experience and education provide context.</p>
+  <label class="checkbox-label"><input name="reasoning" type="checkbox" [(ngModel)]="includeReasoning"> Include optional candidate reasoning for the top five (may take longer)</label>
+  </fieldset>
+  @if (validationMessage(); as message) { <p class="hint" role="status">{{ message }}</p> }
+  <button type="button" class="btn" (click)="search()" [disabled]="!canSearch()">
+    {{ loading() ? 'Searching…' : 'Find candidates' }}
+  </button>
+  @if (error(); as e) {
+    <p class="error" role="alert">{{ e.message }} ({{ e.code }})</p>
+  }
+</div>
+@if (loading()) { <p role="status" aria-live="polite">Searching the shared resume pool...</p> }
+
+@if (result(); as r) {
+  <section aria-label="Results">
+    <h3>Ranked candidates</h3>
+    <p class="summary">
+      {{ r.jd.title || 'Job' }} · required: {{ r.jd.required_skills.join(', ') || 'none' }} ·
+      preferred: {{ r.jd.preferred_skills.join(', ') || 'none' }}
+    </p>
+    <p>Ranked {{ r.pool.ranked }} of {{ r.pool.discovered }} resume(s) in the pool.</p>
+    @if (r.pool.truncated) {
+      <p class="warn" role="status">
+        The pool is larger than {{ r.pool.max_considered }}: only the first {{ r.pool.considered }} resumes were ranked.
+      </p>
+    }
+    @if (r.skipped.length) {
+      <div class="warn" role="status">
+        <p>{{ r.skipped.length }} resume(s) were skipped and not ranked:</p>
+        <ul>
+          @for (s of r.skipped; track s.document_id) {
+            <li>
+              {{ s.document_id.slice(0, 12) }}…
+              @switch (s.reason) {
+                @case ('TOO_LARGE') { too large to match completely }
+                @default { not fully indexed yet, try again shortly }
+              }
+            </li>
+          }
+        </ul>
+      </div>
+    }
+    @if (!r.candidates.length) {
+      <p>No resumes available to rank. Add resumes on the Resume Upload page.</p>
+    }
+    <ol class="results">
+      @for (c of r.candidates; track c.document_id) {
+        <li class="card">
+          <details>
+            <summary>
+              <strong>#{{ c.rank }} {{ name(c) }}</strong>
+              <span class="cov">Match {{ score(c.overall_match_score) }}</span>
+              <span class="cov">Required {{ pct(c.required_skill_coverage) }}</span>
+              <span class="cov">Preferred {{ pct(c.preferred_skill_coverage) }}</span>
+            </summary>
+            <p class="hint">Coverage counts confirmed skill or text evidence. Semantic matches are unconfirmed.</p>
+            @if (c.reasoning; as reasoning) {
+              @switch (reasoning.status) {
+                @case ('AVAILABLE') {
+                  <p><strong>Recommendation:</strong> {{ reasoning.recommendation }}</p>
+                  @if (reasoning.strengths.length) { <p><strong>Strengths:</strong> {{ reasoning.strengths.join('; ') }}</p> }
+                  @if (reasoning.gaps.length) { <p><strong>Gaps:</strong> {{ reasoning.gaps.join('; ') }}</p> }
+                  @if (reasoning.experience_summary) { <p><strong>Experience:</strong> {{ reasoning.experience_summary }}</p> }
+                }
+                @case ('UNAVAILABLE') { <p class="hint">Candidate reasoning unavailable. Match scores are still available.</p> }
+                @default { <p class="hint">Candidate reasoning not requested for this candidate.</p> }
+              }
+            } @else { <p class="hint">Candidate reasoning unavailable.</p> }
+            @for (w of c.warnings; track $index) {
+              <p class="warn">Warning: {{ w }}</p>
+            }
+            @if (c.missing_skills.required.length) {
+              <p class="error">Missing required: {{ c.missing_skills.required.join(', ') }}</p>
+            }
+            @if (c.missing_skills.preferred.length) {
+              <p class="warn">Missing preferred: {{ c.missing_skills.preferred.join(', ') }}</p>
+            }
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr><th>Skill</th><th>Type</th><th>Status</th><th>Evidence</th></tr>
+                </thead>
+                <tbody>
+                  @for (s of skills(c); track $index) {
+                    <tr [class.covered]="s.covered">
+                      <td>{{ s.skill }}</td>
+                      <td>{{ s.requirement }}</td>
+                      <td>{{ evidenceStatus(s.status) }}</td>
+                      <td>
+                        @if (s.evidence; as ev) {
+                          <q>{{ ev.excerpt }}</q>
+                          <small>{{ ev.kind }}@if (ev.page_numbers.length) { · p. {{ ev.page_numbers.join(', ') }}}</small>
+                        } @else {
+                          -
+                        }
+                      </td>
+                    </tr>
+                  }
+                </tbody>
+              </table>
+            </div>
+          </details>
+        </li>
+      }
+    </ol>
+  </section>
+}

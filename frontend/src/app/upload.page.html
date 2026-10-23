@@ -1,0 +1,52 @@
+<h2>Resume Upload</h2>
+<p class="hint">Select one or more PDF resumes. Each is indexed into the shared resume pool used by JD Candidate Search.</p>
+
+<div class="card">
+  <label class="file-picker">
+    <span class="btn">Select PDF resumes</span>
+    <input type="file" accept="application/pdf,.pdf" multiple (change)="onFiles($event)" />
+  </label>
+</div>
+
+@if (queue.items().length) {
+  <p class="summary" aria-live="polite">
+    {{ counts().indexed }} indexed · {{ counts().pending }} pending indexing · {{ counts().failed }} failed ·
+    {{ counts().uploading + counts().queued }} in progress
+  </p>
+  <ul class="file-list">
+    @for (item of queue.items(); track item.id) {
+      <li class="file-row">
+        <div class="file-main">
+          <span class="file-name">{{ item.name }}</span>
+          <span class="badge" [class]="'badge status-' + item.status">{{ labels[item.status] }}</span>
+        </div>
+        @if (item.status === 'uploading') {
+          <progress max="100" [value]="item.progress ?? 0" [attr.aria-label]="'Upload progress for ' + item.name"></progress>
+          <small>{{ item.progress ?? 0 }}%</small>
+        }
+        @if (item.status === 'pending') {
+          <small class="warn">Stored but not yet searchable. Use Retry to check again shortly.</small>
+        }
+        @if (item.error; as e) {
+          <small class="error" role="alert">
+            {{ e.message }} ({{ e.code }})
+            @if (item.uncertain) { - the resume may have been stored; retrying is safe. }
+          </small>
+        }
+        @if (item.status === 'indexed' && item.pageCount) {
+          <small>{{ item.pageCount }} page(s)</small>
+        }
+        <div class="file-actions">
+          @if (item.status === 'failed' || item.status === 'pending') {
+            @if (item.error?.code !== 'NOT_PDF') {
+              <button type="button" class="btn small" (click)="queue.retry(item.id)">Retry</button>
+            }
+          }
+          @if (item.status !== 'uploading') {
+            <button type="button" class="btn small ghost" (click)="queue.remove(item.id)">Remove</button>
+          }
+        </div>
+      </li>
+    }
+  </ul>
+}

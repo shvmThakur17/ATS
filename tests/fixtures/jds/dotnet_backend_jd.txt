@@ -1,0 +1,35 @@
+.NET Backend Developer
+
+About the role
+We are a growing product company building web platforms for logistics customers. We are hiring a backend
+developer to join a small engineering team.
+
+Responsibilities
+- Design, develop and maintain REST APIs for our customer-facing platform.
+- Develop and optimize database objects and queries.
+- Integrate internal services with third-party APIs.
+- Maintain and enhance existing software, fixing defects and improving performance.
+- Debug production issues and provide technical support.
+- Write clean, tested, maintainable code and take part in code reviews.
+
+Required Skills
+- C#
+- ASP.NET Core
+- .NET
+- SQL Server
+- REST APIs
+
+Experience
+- 3+ years of professional experience building backend services
+
+Education
+- Bachelor's degree in Computer Science or equivalent
+
+Preferred Skills
+- Azure
+- Docker
+- Angular
+
+Benefits
+- Flexible working hours
+- Learning budget

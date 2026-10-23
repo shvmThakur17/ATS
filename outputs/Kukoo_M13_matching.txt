@@ -1,0 +1,255 @@
+JD MATCHING
+===========
+JD:
+.NET Backend Developer  (jd-025477989600)
+
+Candidates:
+2
+Required skills parsed: C#, ASP.NET Core, .NET, SQL Server, REST APIs
+Preferred skills parsed: Azure, Docker, Angular
+Responsibilities: 6; experience requirements: 1; education requirements: 1; unclassified lines: 5
+As-of month for current roles: 2026-10; top_k=10
+Candidates are ranked by skills only (required coverage, then preferred coverage, then semantic evidence).
+
+CANDIDATE
+=========
+Document: 38d51c380bedb8404d85d633a34bea19b87799c93a85bc72b9e0858dc9ed268a
+
+REQUIRED SKILLS
+===============
+Skill           Status                    Evidence                                  Similarity
+C#              EXPLICIT_SKILL            SKILLS_LIST skills[4]                     0.69
+ASP.NET Core    EXPLICIT_SKILL            SKILLS_LIST skills[12]                    0.69
+.NET            EXPLICIT_TEXT_EVIDENCE    TEXT_MENTION summary                      0.80
+SQL Server      EXPLICIT_TEXT_EVIDENCE    TEXT_MENTION summary                      0.80
+REST APIs       EXPLICIT_TEXT_EVIDENCE    TEXT_MENTION projects[2].description      n/a
+
+PREFERRED SKILLS
+================
+Skill           Status                    Evidence                                  Similarity
+Azure           NOT_FOUND                 -                                         n/a
+Docker          NOT_FOUND                 -                                         n/a
+Angular         NOT_FOUND                 -                                         n/a
+
+COVERAGE
+========
+Required Skill Coverage:  1.00   (required skills with explicit evidence / required skills)
+Preferred Skill Coverage: 0.00   (preferred skills with explicit evidence / preferred skills)
+
+RETRIEVAL (informational, not used for ranking)
+===============================================
+Queries: REQUIRED_SKILLS, PREFERRED_SKILLS, RESPONSIBILITIES, EXPERIENCE, EDUCATION
+Retrieved chunks: 36 (15 unique)
+Top semantic score: 0.80
+Average top-k score: 0.68
+Chunks above the relevance threshold: 14
+
+EXPERIENCE / EDUCATION
+======================
+Experience: JD asks 3+ years; overall employment 51 months; meets=True
+  (overall employment duration (overlapping roles merged), not technology-specific; the stated and calculated durations disagree on whether the requirement is met)
+  Resume-stated: "2.6+ years" (31 months, meets=False) from summary, blocks p0/lb23, pages 0
+  DISCREPANCY: resume states "2.6+ years" (31 months) but employment dates give 51 months; both are reported and neither is treated as authoritative
+Education: JD levels ['bachelor']; resume levels ['diploma']; NOT_FOUND
+  (the JD allows an equivalent qualification; equivalence is not evaluated)
+  education[0]: degree='10th', field=None, institution='Govt. School Gaddi Kheri Rohtak', levels=[], blocks p0/lb16, pages 0
+  education[1]: degree='12th', field=None, institution='Govt. School Gaddi Kheri Rohtak', levels=[], blocks p0/lb18, pages 0
+  education[2]: degree='Diploma', field='CS', institution='Govt. Polytechnic Mehem Rohtak', levels=['diploma'], blocks p0/lb20, pages 0
+
+SKILL RANKING (the only ranking input)
+======================================
+  rank 1
+  required:  5/5 explicit, 0 semantic-only
+  preferred: 0/3 explicit, 0 semantic-only
+  key = (required explicit share, preferred explicit share, required semantic share, preferred semantic share) = (1.0, 0.0, 0.0, 0.0)
+  compared lexicographically; semantic-only never counts as covered; experience, education and retrieval similarity are shown for information and do not rank
+
+EVIDENCE
+========
+
+Query Type: REQUIRED_SKILLS
+Chunk: resume-summary-001
+Chunk Type: SUMMARY
+Canonical Path: summary
+Score: 0.8036 (STRONG)
+Logical Blocks: p0/lb23
+Evidence: .NET Developer with 2.6+ years of experience in building web and desktop applications using C#, ASP.NET Cor...
+
+Query Type: RESPONSIBILITIES
+Chunk: resume-project-003
+Chunk Type: PROJECT
+Canonical Path: projects[2]
+Score: 0.7336 (MODERATE)
+Logical Blocks: p0/lb29, p0/lb30
+Evidence: Project: Shop Findy (API) Description: Developed RESTful APIs in a 5-layer architecture to support a fronte...
+
+Query Type: EDUCATION
+Chunk: resume-education-003
+Chunk Type: EDUCATION
+Canonical Path: education[2]
+Score: 0.7178 (MODERATE)
+Logical Blocks: p0/lb20, p0/lb21
+Evidence: Degree: Diploma Field of Study: CS Institution: Govt. Polytechnic Mehem Rohtak
+
+Query Type: EXPERIENCE
+Chunk: resume-summary-001
+Chunk Type: SUMMARY
+Canonical Path: summary
+Score: 0.7018 (MODERATE)
+Logical Blocks: p0/lb23
+Evidence: .NET Developer with 2.6+ years of experience in building web and desktop applications using C#, ASP.NET Cor...
+
+Query Type: RESPONSIBILITIES
+Chunk: resume-summary-001
+Chunk Type: SUMMARY
+Canonical Path: summary
+Score: 0.6892 (MODERATE)
+Logical Blocks: p0/lb23
+Evidence: .NET Developer with 2.6+ years of experience in building web and desktop applications using C#, ASP.NET Cor...
+
+Query Type: REQUIRED_SKILLS
+Chunk: resume-skills-001
+Chunk Type: SKILLS
+Canonical Path: skills
+Score: 0.6875 (MODERATE)
+Logical Blocks: p0/lb6, p0/lb7, p0/lb8, p0/lb9, p0/lb10, p0/lb11
+Evidence: HTML, CSS, Bootstrap, jQuery, C#, VB.NET, SQL, WEB FORMS, ASP.NET MVC, Web APIs, DEBUGGING, GitHub, ASP.NET...
+
+Skill .NET: EXPLICIT_TEXT_EVIDENCE at summary (blocks p0/lb23; pages 0; chunk resume-summary-001; score 0.80)
+  term: .NET
+  text: .NET Developer with 2.6+ years of experience in building web and desktop applications using C#, ASP.NET Cor...
+
+Skill SQL Server: EXPLICIT_TEXT_EVIDENCE at summary (blocks p0/lb23; pages 0; chunk resume-summary-001; score 0.80)
+  term: SQL Server
+  text: .NET Developer with 2.6+ years of experience in building web and desktop applications using C#, ASP.NET Cor...
+
+Skill REST APIs: EXPLICIT_TEXT_EVIDENCE at projects[2].description (blocks p0/lb30; pages 0; chunk None; score n/a)
+  term: RESTful APIs
+  text: Developed RESTful APIs in a 5-layer architecture to support a frontend application, using SQL Server for da...
+
+WARNINGS
+========
+- .NET (required) is only mentioned in text (summary), not listed as a skill
+- SQL Server (required) is only mentioned in text (summary), not listed as a skill
+- REST APIs (required) is only mentioned in text (projects[2].description), not listed as a skill
+- Azure (preferred) has no explicit resume evidence
+- Docker (preferred) has no explicit resume evidence
+- Angular (preferred) has no explicit resume evidence
+- experience requirement is not confirmed (UNKNOWN): overall employment duration (overlapping roles merged), not technology-specific; the stated and calculated durations disagree on whether the requirement is met
+- resume states "2.6+ years" (31 months) but employment dates give 51 months; both are reported and neither is treated as authoritative
+- education requirement not explicitly met (NOT_FOUND): the JD allows an equivalent qualification; equivalence is not evaluated
+
+CANDIDATE
+=========
+Document: synthetic-candidate-b
+
+REQUIRED SKILLS
+===============
+Skill           Status                    Evidence                                  Similarity
+C#              NOT_FOUND                 -                                         n/a
+ASP.NET Core    NOT_FOUND                 -                                         n/a
+.NET            NOT_FOUND                 -                                         n/a
+SQL Server      NOT_FOUND                 -                                         n/a
+REST APIs       EXPLICIT_SKILL            SKILLS_LIST skills[3]                     0.71
+
+PREFERRED SKILLS
+================
+Skill           Status                    Evidence                                  Similarity
+Azure           EXPLICIT_SKILL            SKILLS_LIST skills[2]                     0.71
+Docker          EXPLICIT_SKILL            SKILLS_LIST skills[1]                     0.71
+Angular         NOT_FOUND                 -                                         n/a
+
+COVERAGE
+========
+Required Skill Coverage:  0.20   (required skills with explicit evidence / required skills)
+Preferred Skill Coverage: 0.67   (preferred skills with explicit evidence / preferred skills)
+
+RETRIEVAL (informational, not used for ranking)
+===============================================
+Queries: REQUIRED_SKILLS, PREFERRED_SKILLS, RESPONSIBILITIES, EXPERIENCE, EDUCATION
+Retrieved chunks: 16 (5 unique)
+Top semantic score: 0.76
+Average top-k score: 0.70
+Chunks above the relevance threshold: 4
+
+EXPERIENCE / EDUCATION
+======================
+Experience: JD asks 3+ years; overall employment 53 months; meets=True
+  (overall employment duration (overlapping roles merged), not technology-specific)
+Education: JD levels ['bachelor']; resume levels ['bachelor']; EXPLICIT_MATCH
+  (the JD allows an equivalent qualification; equivalence is not evaluated)
+  education[0]: degree='B.Tech', field=None, institution='State University', levels=['bachelor'], blocks p0/lb7, pages 0
+
+SKILL RANKING (the only ranking input)
+======================================
+  rank 2
+  required:  1/5 explicit, 0 semantic-only
+  preferred: 2/3 explicit, 0 semantic-only
+  key = (required explicit share, preferred explicit share, required semantic share, preferred semantic share) = (0.2, 0.667, 0.0, 0.0)
+  compared lexicographically; semantic-only never counts as covered; experience, education and retrieval similarity are shown for information and do not rank
+
+EVIDENCE
+========
+
+Query Type: EDUCATION
+Chunk: resume-education-001
+Chunk Type: EDUCATION
+Canonical Path: education[0]
+Score: 0.7552 (STRONG)
+Logical Blocks: p0/lb7, p0/lb8
+Evidence: Degree: B.Tech Institution: State University
+
+Query Type: RESPONSIBILITIES
+Chunk: resume-summary-001
+Chunk Type: SUMMARY
+Canonical Path: summary
+Score: 0.7362 (MODERATE)
+Logical Blocks: p0/lb2
+Evidence: Backend engineer building Python services, REST APIs and containerized deployments on Azure.
+
+Query Type: RESPONSIBILITIES
+Chunk: resume-work-001
+Chunk Type: WORK_EXPERIENCE
+Canonical Path: work_experience[0]
+Score: 0.7194 (MODERATE)
+Logical Blocks: p0/lb3, p0/lb4
+Evidence: Role: Backend Engineer Company: CloudCo Employment: 2019-01 to 2023-06 Description: Designed and maintained...
+
+Query Type: PREFERRED_SKILLS
+Chunk: resume-skills-001
+Chunk Type: SKILLS
+Canonical Path: skills
+Score: 0.7118 (MODERATE)
+Logical Blocks: p0/lb9
+Evidence: Python, Docker, Azure, REST APIs
+
+Query Type: PREFERRED_SKILLS
+Chunk: resume-summary-001
+Chunk Type: SUMMARY
+Canonical Path: summary
+Score: 0.6684 (MODERATE)
+Logical Blocks: p0/lb2
+Evidence: Backend engineer building Python services, REST APIs and containerized deployments on Azure.
+
+Query Type: EXPERIENCE
+Chunk: resume-summary-001
+Chunk Type: SUMMARY
+Canonical Path: summary
+Score: 0.6463 (MODERATE)
+Logical Blocks: p0/lb2
+Evidence: Backend engineer building Python services, REST APIs and containerized deployments on Azure.
+
+WARNINGS
+========
+- C# (required) has no explicit resume evidence
+- ASP.NET Core (required) has no explicit resume evidence
+- .NET (required) has no explicit resume evidence
+- SQL Server (required) has no explicit resume evidence
+- Angular (preferred) has no explicit resume evidence
+
+Temporary namespace m13-test:synthetic-candidate-b deleted; resume:38d51c380bedb8404d85d633a34bea19b87799c93a85bc72b9e0858dc9ed268a left in place.
+
+FINAL RESULT
+============
+Structured matching evidence generated successfully.
+This is evidence about the resumes, not a hiring recommendation. M14 performs the final reasoning.
